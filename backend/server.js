@@ -28,7 +28,12 @@ connectDB();
 
 // Middleware — must come BEFORE routes
 app.use(helmet());
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://bajrang-gym-maangement.vercel.app",
+    credentials: true,
+  }),
+);
 app.use(express.json());
 
 // Rate limiter for auth routes specifically — stricter, since these are brute-force targets
