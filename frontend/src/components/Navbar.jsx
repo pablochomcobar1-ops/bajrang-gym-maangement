@@ -203,6 +203,13 @@ function Navbar() {
           >
             Appointments
           </Link>
+          <Link
+            to="/my-attendance"
+            className={linkClass("/my-attendance")}
+            onClick={() => setMenuOpen(false)}
+          >
+            My Attendance
+          </Link>
         </>
       )}
     </>

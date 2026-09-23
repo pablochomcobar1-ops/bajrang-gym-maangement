@@ -40,4 +40,16 @@ const getTodayAttendance = async (req, res) => {
   }
 };
 
-module.exports = { checkInMember, getTodayAttendance };
+const getMyAttendance = async (req, res) => {
+  try {
+    const records = await Attendance.find({ member: req.user._id })
+      .sort({ createdAt: -1 })
+      .limit(50);
+
+    res.status(200).json(records);
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+
+module.exports = { checkInMember, getTodayAttendance, getMyAttendance };

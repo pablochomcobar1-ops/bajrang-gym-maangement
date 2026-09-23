@@ -3,6 +3,7 @@ const router = express.Router();
 const {
   checkInMember,
   getTodayAttendance,
+  getMyAttendance,
 } = require("../controllers/attendanceController");
 const { protect, allowRoles } = require("../middleware/authMiddleware");
 
@@ -14,4 +15,5 @@ router.get(
   getTodayAttendance,
 );
 
+router.get("/mine", protect, getMyAttendance);
 module.exports = router;
