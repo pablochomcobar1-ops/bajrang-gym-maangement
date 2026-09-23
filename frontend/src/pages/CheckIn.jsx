@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import API from "../api/axios";
 import toast from "react-hot-toast";
+import QrScanner from "../components/QrScanner";
 
 function CheckIn() {
   const [members, setMembers] = useState([]);
@@ -9,6 +10,7 @@ function CheckIn() {
   const [selectedMember, setSelectedMember] = useState("");
   const [loading, setLoading] = useState(true);
   const token = localStorage.getItem("token");
+  const [scanning, setScanning] = useState(false);
 
   const fetchData = async () => {
     try {
@@ -49,6 +51,24 @@ function CheckIn() {
     }
   };
 
+  const handleScanSuccess = async (memberId) => {
+    setScanning(false);
+    try {
+      const res = await API.post(
+        "/attendance",
+        { member: memberId },
+        { headers: { Authorization: `Bearer ${token}` } },
+      );
+      setTodayRecords([res.data, ...todayRecords]);
+      toast.success(`${res.data.member?.name || "Member"} checked in`);
+    } catch (err) {
+      toast.error(
+        err.response?.data?.message ||
+          "Check-in failed — invalid or already scanned",
+      );
+    }
+  };
+
   if (loading) return <p className="text-text text-center mt-10">Loading...</p>;
 
   return (
@@ -57,30 +77,48 @@ function CheckIn() {
         Member Check-In
       </h1>
 
-      <form
-        onSubmit={handleCheckIn}
-        className="bg-surface/80 backdrop-blur-xl border border-white/10 p-6 rounded-2xl mb-8 max-w-md flex gap-3"
-      >
-        <select
-          value={selectedMember}
-          onChange={(e) => setSelectedMember(e.target.value)}
-          required
-          className="flex-1 p-3 rounded-xl bg-surface-light text-text outline-none focus:ring-2 focus:ring-accent-violet"
-        >
-          <option value="">Select a member</option>
-          {members.map((m) => (
-            <option key={m._id} value={m._id}>
-              {m.name} ({m.email})
-            </option>
-          ))}
-        </select>
+      <div className="mb-8 max-w-md">
         <button
-          type="submit"
-          className="bg-gradient-to-r from-accent-violet to-accent-pink text-white px-5 py-3 rounded-xl font-semibold transition hover:brightness-110 active:scale-[0.98]"
+          onClick={() => setScanning(!scanning)}
+          className="mb-4 bg-gradient-to-r from-accent-violet to-accent-pink text-white px-5 py-2.5 rounded-xl font-medium hover:brightness-110 transition"
         >
-          Check In
+          {scanning ? "Close Scanner" : "📷 Scan QR Code"}
         </button>
-      </form>
+
+        {scanning && (
+          <QrScanner
+            onScanSuccess={handleScanSuccess}
+            onClose={() => setScanning(false)}
+          />
+        )}
+
+        {!scanning && (
+          <form
+            onSubmit={handleCheckIn}
+            className="bg-surface/80 backdrop-blur-xl border border-white/10 p-6 rounded-2xl flex gap-3"
+          >
+            <select
+              value={selectedMember}
+              onChange={(e) => setSelectedMember(e.target.value)}
+              required
+              className="flex-1 p-3 rounded-xl bg-surface-light text-text outline-none focus:ring-2 focus:ring-accent-violet"
+            >
+              <option value="">Select a member</option>
+              {members.map((m) => (
+                <option key={m._id} value={m._id}>
+                  {m.name} ({m.email})
+                </option>
+              ))}
+            </select>
+            <button
+              type="submit"
+              className="bg-gradient-to-r from-accent-violet to-accent-pink text-white px-5 py-3 rounded-xl font-semibold transition hover:brightness-110 active:scale-[0.98]"
+            >
+              Check In
+            </button>
+          </form>
+        )}
+      </div>
 
       <h2 className="font-display text-xl font-bold text-text mb-4">
         Today's Check-Ins ({todayRecords.length})
