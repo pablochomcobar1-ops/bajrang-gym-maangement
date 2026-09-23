@@ -13,6 +13,7 @@ function Members() {
   const [confirmDeleteId, setConfirmDeleteId] = useState(null);
   const [plans, setPlans] = useState([]);
   const [renewingId, setRenewingId] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const token = localStorage.getItem("token");
 
@@ -121,6 +122,14 @@ function Members() {
         </p>
       )}
 
+      <input
+        type="text"
+        placeholder="Search by name or email..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        className="w-full max-w-md mb-4 p-3 rounded-xl bg-surface-light text-text placeholder-text-muted outline-none focus:ring-2 focus:ring-accent-violet"
+      />
+
       <div className="bg-surface/80 backdrop-blur-xl border border-white/10 rounded-2xl overflow-x-auto">
         <table className="w-full text-left text-text min-w-[700px]">
           <thead className="bg-surface-light">
@@ -135,127 +144,133 @@ function Members() {
             </tr>
           </thead>
           <tbody>
-            {members.map((member) => (
-              <tr key={member._id} className="border-t border-white/5">
-                {editingId === member._id ? (
-                  <>
-                    <td className="p-3">
-                      <input
-                        name="name"
-                        value={editForm.name}
-                        onChange={handleEditChange}
-                        className="bg-surface-light p-1.5 rounded-lg w-full outline-none focus:ring-2 focus:ring-accent-violet"
-                      />
-                    </td>
-                    <td className="p-3">
-                      <input
-                        name="email"
-                        value={editForm.email}
-                        onChange={handleEditChange}
-                        className="bg-surface-light p-1.5 rounded-lg w-full outline-none focus:ring-2 focus:ring-accent-violet"
-                      />
-                    </td>
-                    <td className="p-3">
-                      <input
-                        name="phone"
-                        value={editForm.phone}
-                        onChange={handleEditChange}
-                        className="bg-surface-light p-1.5 rounded-lg w-full outline-none focus:ring-2 focus:ring-accent-violet"
-                      />
-                    </td>
+            {members
+              .filter(
+                (m) =>
+                  m.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                  m.email.toLowerCase().includes(searchTerm.toLowerCase()),
+              )
+              .map((member) => (
+                <tr key={member._id} className="border-t border-white/5">
+                  {editingId === member._id ? (
+                    <>
+                      <td className="p-3">
+                        <input
+                          name="name"
+                          value={editForm.name}
+                          onChange={handleEditChange}
+                          className="bg-surface-light p-1.5 rounded-lg w-full outline-none focus:ring-2 focus:ring-accent-violet"
+                        />
+                      </td>
+                      <td className="p-3">
+                        <input
+                          name="email"
+                          value={editForm.email}
+                          onChange={handleEditChange}
+                          className="bg-surface-light p-1.5 rounded-lg w-full outline-none focus:ring-2 focus:ring-accent-violet"
+                        />
+                      </td>
+                      <td className="p-3">
+                        <input
+                          name="phone"
+                          value={editForm.phone}
+                          onChange={handleEditChange}
+                          className="bg-surface-light p-1.5 rounded-lg w-full outline-none focus:ring-2 focus:ring-accent-violet"
+                        />
+                      </td>
 
-                    <td className="p-3 text-text-muted capitalize">
-                      {member.role}
-                    </td>
-                    <td className="p-3 text-text-muted">—</td>
-                    <td className="p-3 text-text-muted">
-                      {new Date(member.createdAt).toLocaleDateString()}
-                    </td>
-                    <td className="p-3 space-x-2">
-                      <button
-                        onClick={() => saveEdit(member._id)}
-                        className="bg-accent-lime text-base px-3 py-1 rounded-lg text-sm font-medium hover:brightness-110 transition"
-                      >
-                        Save
-                      </button>
-                      <button
-                        onClick={cancelEditing}
-                        className="bg-surface-light hover:bg-white/10 text-text px-3 py-1 rounded-lg text-sm transition"
-                      >
-                        Cancel
-                      </button>
-                    </td>
-                  </>
-                ) : (
-                  <>
-                    <td className="p-3">{member.name}</td>
-                    <td className="p-3 text-text-muted">{member.email}</td>
-                    <td className="p-3 text-text-muted">
-                      {member.phone || "—"}
-                    </td>
-                    <td className="p-3 capitalize text-text-muted">
-                      {member.role}
-                    </td>
-                    <td className="p-3">
-                      {renewingId === member._id ? (
-                        <select
-                          onChange={(e) =>
-                            handleRenew(member._id, e.target.value)
-                          }
-                          defaultValue=""
-                          className="bg-surface-light text-text text-sm p-1.5 rounded-lg outline-none"
+                      <td className="p-3 text-text-muted capitalize">
+                        {member.role}
+                      </td>
+                      <td className="p-3 text-text-muted">—</td>
+                      <td className="p-3 text-text-muted">
+                        {new Date(member.createdAt).toLocaleDateString()}
+                      </td>
+                      <td className="p-3 space-x-2">
+                        <button
+                          onClick={() => saveEdit(member._id)}
+                          className="bg-accent-lime text-base px-3 py-1 rounded-lg text-sm font-medium hover:brightness-110 transition"
                         >
-                          <option value="" disabled>
-                            Select plan
-                          </option>
-                          {plans.map((p) => (
-                            <option key={p._id} value={p._id}>
-                              {p.name}
+                          Save
+                        </button>
+                        <button
+                          onClick={cancelEditing}
+                          className="bg-surface-light hover:bg-white/10 text-text px-3 py-1 rounded-lg text-sm transition"
+                        >
+                          Cancel
+                        </button>
+                      </td>
+                    </>
+                  ) : (
+                    <>
+                      <td className="p-3">{member.name}</td>
+                      <td className="p-3 text-text-muted">{member.email}</td>
+                      <td className="p-3 text-text-muted">
+                        {member.phone || "—"}
+                      </td>
+                      <td className="p-3 capitalize text-text-muted">
+                        {member.role}
+                      </td>
+                      <td className="p-3">
+                        {renewingId === member._id ? (
+                          <select
+                            onChange={(e) =>
+                              handleRenew(member._id, e.target.value)
+                            }
+                            defaultValue=""
+                            className="bg-surface-light text-text text-sm p-1.5 rounded-lg outline-none"
+                          >
+                            <option value="" disabled>
+                              Select plan
                             </option>
-                          ))}
-                        </select>
-                      ) : (
-                        <span
-                          className={
-                            getExpiryStatus(member.membershipExpiry).color
-                          }
+                            {plans.map((p) => (
+                              <option key={p._id} value={p._id}>
+                                {p.name}
+                              </option>
+                            ))}
+                          </select>
+                        ) : (
+                          <span
+                            className={
+                              getExpiryStatus(member.membershipExpiry).color
+                            }
+                          >
+                            {member.membershipPlan?.name || "No plan"} —{" "}
+                            {getExpiryStatus(member.membershipExpiry).label}
+                          </span>
+                        )}
+                      </td>
+                      <td className="p-3 text-text-muted">
+                        {new Date(member.createdAt).toLocaleDateString()}
+                      </td>
+                      <td className="p-3 space-x-2">
+                        <button
+                          onClick={() => startEditing(member)}
+                          className="bg-accent-violet/20 hover:bg-accent-violet/30 text-accent-violet px-3 py-1 rounded-lg text-sm transition"
                         >
-                          {member.membershipPlan?.name || "No plan"} —{" "}
-                          {getExpiryStatus(member.membershipExpiry).label}
-                        </span>
-                      )}
-                    </td>
-                    <td className="p-3 text-text-muted">
-                      {new Date(member.createdAt).toLocaleDateString()}
-                    </td>
-                    <td className="p-3 space-x-2">
-                      <button
-                        onClick={() => startEditing(member)}
-                        className="bg-accent-violet/20 hover:bg-accent-violet/30 text-accent-violet px-3 py-1 rounded-lg text-sm transition"
-                      >
-                        Edit
-                      </button>
-                      <button
-                        onClick={() =>
-                          setRenewingId(
-                            renewingId === member._id ? null : member._id,
-                          )
-                        }
-                        className="bg-accent-lime/20 hover:bg-accent-lime/30 text-accent-lime px-3 py-1 rounded-lg text-sm transition"
-                      >
-                        {renewingId === member._id ? "Cancel" : "Renew"}
-                      </button>
-                      <button
-                        onClick={() => confirmDelete(member._id)}
-                        className="bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/30 px-3 py-1 rounded-lg text-sm transition"
-                      >
-                        Delete
-                      </button>
-                    </td>
-                  </>
-                )}
-              </tr>
-            ))}
+                          Edit
+                        </button>
+                        <button
+                          onClick={() =>
+                            setRenewingId(
+                              renewingId === member._id ? null : member._id,
+                            )
+                          }
+                          className="bg-accent-lime/20 hover:bg-accent-lime/30 text-accent-lime px-3 py-1 rounded-lg text-sm transition"
+                        >
+                          {renewingId === member._id ? "Cancel" : "Renew"}
+                        </button>
+                        <button
+                          onClick={() => confirmDelete(member._id)}
+                          className="bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/30 px-3 py-1 rounded-lg text-sm transition"
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </>
+                  )}
+                </tr>
+              ))}
           </tbody>
         </table>
         {members.length === 0 && !error && (

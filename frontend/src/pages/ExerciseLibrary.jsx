@@ -11,6 +11,7 @@ function ExerciseLibrary() {
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [confirmDeleteId, setConfirmDeleteId] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const [formData, setFormData] = useState({
     name: "",
@@ -145,6 +146,14 @@ function ExerciseLibrary() {
         ))}
       </div>
 
+      <input
+        type="text"
+        placeholder="Search exercises..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        className="w-full max-w-md mb-4 p-3 rounded-xl bg-surface-light text-text placeholder-text-muted outline-none focus:ring-2 focus:ring-accent-violet"
+      />
+
       {canManage && showForm && (
         <form
           onSubmit={handleCreate}
@@ -213,53 +222,57 @@ function ExerciseLibrary() {
       )}
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {exercises.map((ex, i) => (
-          <motion.div
-            key={ex._id}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: i * 0.03 }}
-            style={{ perspective: "1000px" }}
-          >
-            <TiltCard className="bg-surface/80 backdrop-blur-xl border border-white/10 p-5 rounded-2xl text-text shadow-[0_0_40px_-15px_rgba(242,128,30,0.3)] hover:shadow-[0_0_50px_-10px_rgba(242,128,30,0.5)] transition-shadow">
-              <div className="flex justify-between items-start mb-1">
-                <h2 className="font-display text-lg font-bold">{ex.name}</h2>
-                <span
-                  className={`text-xs font-semibold capitalize ${difficultyColor[ex.difficulty]}`}
-                >
-                  {ex.difficulty}
-                </span>
-              </div>
-              <p className="text-text-muted text-xs capitalize mb-2">
-                {ex.muscleGroup}
-              </p>
-              <p className="text-text-muted text-sm mb-2">{ex.description}</p>
-              {ex.equipmentNeeded && ex.equipmentNeeded !== "None" && (
-                <p className="text-text-muted text-xs">
-                  Equipment: {ex.equipmentNeeded}
+        {exercises
+          .filter((ex) =>
+            ex.name.toLowerCase().includes(searchTerm.toLowerCase()),
+          )
+          .map((ex, i) => (
+            <motion.div
+              key={ex._id}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: i * 0.03 }}
+              style={{ perspective: "1000px" }}
+            >
+              <TiltCard className="bg-surface/80 backdrop-blur-xl border border-white/10 p-5 rounded-2xl text-text shadow-[0_0_40px_-15px_rgba(242,128,30,0.3)] hover:shadow-[0_0_50px_-10px_rgba(242,128,30,0.5)] transition-shadow">
+                <div className="flex justify-between items-start mb-1">
+                  <h2 className="font-display text-lg font-bold">{ex.name}</h2>
+                  <span
+                    className={`text-xs font-semibold capitalize ${difficultyColor[ex.difficulty]}`}
+                  >
+                    {ex.difficulty}
+                  </span>
+                </div>
+                <p className="text-text-muted text-xs capitalize mb-2">
+                  {ex.muscleGroup}
                 </p>
-              )}
-              {ex.videoUrl && (
-                <a
-                  href={ex.videoUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-accent-violet text-sm hover:underline block mt-2"
-                >
-                  Watch video →
-                </a>
-              )}
-              {canManage && (
-                <button
-                  onClick={() => confirmDelete(ex._id)}
-                  className="mt-3 bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/30 px-3 py-1 rounded-xl text-sm transition"
-                >
-                  Delete
-                </button>
-              )}
-            </TiltCard>
-          </motion.div>
-        ))}
+                <p className="text-text-muted text-sm mb-2">{ex.description}</p>
+                {ex.equipmentNeeded && ex.equipmentNeeded !== "None" && (
+                  <p className="text-text-muted text-xs">
+                    Equipment: {ex.equipmentNeeded}
+                  </p>
+                )}
+                {ex.videoUrl && (
+                  <a
+                    href={ex.videoUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-accent-violet text-sm hover:underline block mt-2"
+                  >
+                    Watch video →
+                  </a>
+                )}
+                {canManage && (
+                  <button
+                    onClick={() => confirmDelete(ex._id)}
+                    className="mt-3 bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/30 px-3 py-1 rounded-xl text-sm transition"
+                  >
+                    Delete
+                  </button>
+                )}
+              </TiltCard>
+            </motion.div>
+          ))}
 
         {exercises.length === 0 && (
           <p className="text-text-muted">No exercises found.</p>

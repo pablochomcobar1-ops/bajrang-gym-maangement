@@ -9,6 +9,7 @@ function Inventory() {
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [confirmDeleteId, setConfirmDeleteId] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const [formData, setFormData] = useState({
     name: "",
@@ -161,6 +162,14 @@ function Inventory() {
         </form>
       )}
 
+      <input
+        type="text"
+        placeholder="Search items..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        className="w-full max-w-md mb-4 p-3 rounded-xl bg-surface-light text-text placeholder-text-muted outline-none focus:ring-2 focus:ring-accent-violet"
+      />
+
       <div className="bg-surface/80 backdrop-blur-xl border border-white/10 rounded-2xl overflow-x-auto">
         <table className="w-full text-left text-text min-w-[600px]">
           <thead className="bg-surface-light">
@@ -173,30 +182,34 @@ function Inventory() {
             </tr>
           </thead>
           <tbody>
-            {items.map((item) => (
-              <tr key={item._id} className="border-t border-white/5">
-                <td className="p-3">{item.name}</td>
-                <td className="p-3 capitalize text-text-muted">
-                  {item.category}
-                </td>
-                <td className="p-3">{item.quantity}</td>
-                <td
-                  className={`p-3 capitalize font-medium ${conditionColor[item.condition]}`}
-                >
-                  {item.condition}
-                </td>
-                {isAdmin && (
-                  <td className="p-3">
-                    <button
-                      onClick={() => confirmDelete(item._id)}
-                      className="bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/30 px-3 py-1 rounded-xl text-sm transition"
-                    >
-                      Delete
-                    </button>
+            {items
+              .filter((item) =>
+                item.name.toLowerCase().includes(searchTerm.toLowerCase()),
+              )
+              .map((item) => (
+                <tr key={item._id} className="border-t border-white/5">
+                  <td className="p-3">{item.name}</td>
+                  <td className="p-3 capitalize text-text-muted">
+                    {item.category}
                   </td>
-                )}
-              </tr>
-            ))}
+                  <td className="p-3">{item.quantity}</td>
+                  <td
+                    className={`p-3 capitalize font-medium ${conditionColor[item.condition]}`}
+                  >
+                    {item.condition}
+                  </td>
+                  {isAdmin && (
+                    <td className="p-3">
+                      <button
+                        onClick={() => confirmDelete(item._id)}
+                        className="bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/30 px-3 py-1 rounded-xl text-sm transition"
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  )}
+                </tr>
+              ))}
           </tbody>
         </table>
         {items.length === 0 && !error && (
