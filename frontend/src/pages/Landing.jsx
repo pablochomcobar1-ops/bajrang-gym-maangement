@@ -22,6 +22,27 @@ function Landing() {
     },
   ];
 
+  const testimonials = [
+    {
+      name: "Rohan Patel",
+      role: "Member since 2025",
+      quote:
+        "The AI workout plans actually adapt to how I'm progressing. Best gym app I've used.",
+    },
+    {
+      name: "Priya Shah",
+      role: "Member since 2026",
+      quote:
+        "Booking appointments with my trainer used to be a hassle. Now it takes two taps.",
+    },
+    {
+      name: "Aman Desai",
+      role: "Member since 2025",
+      quote:
+        "Love seeing my muscle balance chart — finally know which days I'm slacking on legs.",
+    },
+  ];
+
   return (
     <div className="min-h-screen bg-base relative overflow-hidden">
       <div className="absolute w-96 h-96 bg-accent-violet/20 rounded-full blur-[120px] -top-20 -left-20" />
@@ -103,6 +124,29 @@ function Landing() {
             <p className="text-text-muted text-sm">{f.desc}</p>
           </motion.div>
         ))}
+      </div>
+
+      {/* Testimonials */}
+      <div className="relative max-w-5xl mx-auto px-4 pb-24">
+        <h2 className="font-display text-3xl font-bold text-text text-center mb-10">
+          What Our Members Say
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {testimonials.map((t, i) => (
+            <motion.div
+              key={t.name}
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: i * 0.1 }}
+              className="bg-surface/80 backdrop-blur-xl border border-white/10 p-6 rounded-2xl"
+            >
+              <p className="text-accent-lime text-2xl mb-2">"</p>
+              <p className="text-text-muted text-sm mb-4">{t.quote}</p>
+              <p className="text-text font-semibold text-sm">{t.name}</p>
+              <p className="text-text-muted text-xs">{t.role}</p>
+            </motion.div>
+          ))}
+        </div>
       </div>
 
       {/* QR Code */}
