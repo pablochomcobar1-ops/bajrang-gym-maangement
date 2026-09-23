@@ -171,7 +171,27 @@ function Navbar() {
   return (
     <>
       <nav className="bg-surface/80 backdrop-blur-xl border-b border-white/10 px-6 py-3 flex items-center justify-between sticky top-0 z-40">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
+          {/* Hamburger — visible only on mobile, now first in the layout */}
+          <button
+            onClick={() => setMenuOpen(true)}
+            className="md:hidden text-text p-2 rounded-xl hover:bg-surface-light transition -ml-2"
+            aria-label="Open menu"
+          >
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <line x1="3" y1="6" x2="21" y2="6" />
+              <line x1="3" y1="12" x2="21" y2="12" />
+              <line x1="3" y1="18" x2="21" y2="18" />
+            </svg>
+          </button>
+
           <img
             src="/logo.png"
             alt="Bajrang GYM"
@@ -199,26 +219,6 @@ function Navbar() {
             className="hidden md:block bg-surface-light hover:bg-red-500/20 hover:text-red-400 text-text-muted text-sm px-3 py-1.5 rounded-xl transition border border-white/10"
           >
             Logout
-          </button>
-
-          {/* Hamburger — visible only on mobile */}
-          <button
-            onClick={() => setMenuOpen(true)}
-            className="md:hidden text-text p-2 rounded-xl hover:bg-surface-light transition"
-            aria-label="Open menu"
-          >
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <line x1="3" y1="6" x2="21" y2="6" />
-              <line x1="3" y1="12" x2="21" y2="12" />
-              <line x1="3" y1="18" x2="21" y2="18" />
-            </svg>
           </button>
         </div>
       </nav>
