@@ -5,6 +5,7 @@ const {
   registerUser,
   loginUser,
   getProfile,
+  changePassword,
 } = require("../controllers/authController");
 const { protect } = require("../middleware/authMiddleware");
 const { validate } = require("../middleware/validateMiddleware");
@@ -31,5 +32,6 @@ const loginValidation = [
 router.post("/register", registerValidation, validate, registerUser);
 router.post("/login", loginValidation, validate, loginUser);
 router.get("/profile", protect, getProfile);
+router.put("/change-password", protect, changePassword);
 
 module.exports = router;

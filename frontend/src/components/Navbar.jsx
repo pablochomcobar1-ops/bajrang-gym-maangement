@@ -58,6 +58,13 @@ function Navbar() {
         📢 Announcements
       </Link>
       <Link
+        to="/profile"
+        className={linkClass("/profile")}
+        onClick={() => setMenuOpen(false)}
+      >
+        Profile
+      </Link>
+      <Link
         to="/dashboard"
         className={linkClass("/dashboard")}
         onClick={() => setMenuOpen(false)}

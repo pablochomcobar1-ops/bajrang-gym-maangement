@@ -23,6 +23,7 @@ import BookAppointment from "./pages/BookAppointment";
 import ManageAppointments from "./pages/ManageAppointments";
 import Landing from "./pages/Landing";
 import Announcements from "./pages/Announcements";
+import Profile from "./pages/Profile";
 function App() {
   return (
     <BrowserRouter>
@@ -182,6 +183,14 @@ function App() {
           element={
             <PrivateRoute>
               <Announcements />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <PrivateRoute>
+              <Profile />
             </PrivateRoute>
           }
         />
