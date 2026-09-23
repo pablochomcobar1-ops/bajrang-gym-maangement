@@ -64,13 +64,7 @@ function Navbar() {
       >
         Profile
       </Link>
-      <Link
-        to="/dashboard"
-        className={linkClass("/dashboard")}
-        onClick={() => setMenuOpen(false)}
-      >
-        Dashboard
-      </Link>
+
       <Link
         to="/dashboard"
         className={linkClass("/dashboard")}
