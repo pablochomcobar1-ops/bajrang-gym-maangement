@@ -62,7 +62,7 @@ function Landing() {
         transition={{ duration: 0.6 }}
         className="relative max-w-3xl mx-auto text-center px-4 pt-16 pb-24"
       >
-        <h1 className="font-display text-5xl md:text-6xl font-bold text-text mb-6 leading-tight">
+        <h1 className="font-display text-3xl sm:text-4xl md:text-6xl font-bold text-text mb-6 leading-tight">
           Train smarter with{" "}
           <span className="text-accent-violet">AI-powered</span> fitness
         </h1>

@@ -133,7 +133,7 @@ function Progress() {
   }));
 
   return (
-    <div className="min-h-screen bg-base p-8 space-y-8">
+    <div className="min-h-screen bg-base p-4 sm:p-6 md:p-8 space-y-8">
       <h1 className="font-display text-3xl font-bold text-text">My Progress</h1>
 
       {/* Weight chart + log form */}

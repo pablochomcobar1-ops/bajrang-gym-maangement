@@ -72,7 +72,7 @@ function CheckIn() {
   if (loading) return <p className="text-text text-center mt-10">Loading...</p>;
 
   return (
-    <div className="min-h-screen bg-base p-8">
+    <div className="min-h-screen bg-base p-4 sm:p-6 md:p-8">
       <h1 className="font-display text-3xl font-bold text-text mb-6">
         Member Check-In
       </h1>
@@ -95,7 +95,7 @@ function CheckIn() {
         {!scanning && (
           <form
             onSubmit={handleCheckIn}
-            className="bg-surface/80 backdrop-blur-xl border border-white/10 p-6 rounded-2xl flex gap-3"
+            className="bg-surface/80 backdrop-blur-xl border border-white/10 p-6 rounded-2xl flex flex-col sm:flex-row gap-3"
           >
             <select
               value={selectedMember}

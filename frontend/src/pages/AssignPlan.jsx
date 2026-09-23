@@ -55,7 +55,7 @@ function AssignPlan() {
   if (loading) return <p className="text-text text-center mt-10">Loading...</p>;
 
   return (
-    <div className="min-h-screen bg-base p-8">
+    <div className="min-h-screen bg-base p-4 sm:p-6 md:p-8">
       <h1 className="font-display text-3xl font-bold text-text mb-6">
         Assign a Plan
       </h1>

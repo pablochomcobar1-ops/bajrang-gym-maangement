@@ -87,7 +87,7 @@ function Inventory() {
   };
 
   return (
-    <div className="min-h-screen bg-base p-8">
+    <div className="min-h-screen bg-base p-4 sm:p-6 md:p-8">
       <div className="flex justify-between items-center mb-6">
         <h1 className="font-display text-3xl font-bold text-text">Inventory</h1>
         {isAdmin && (
@@ -161,8 +161,8 @@ function Inventory() {
         </form>
       )}
 
-      <div className="bg-surface/80 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden">
-        <table className="w-full text-left text-text">
+      <div className="bg-surface/80 backdrop-blur-xl border border-white/10 rounded-2xl overflow-x-auto">
+        <table className="w-full text-left text-text min-w-[600px]">
           <thead className="bg-surface-light">
             <tr>
               <th className="p-3">Name</th>

@@ -106,7 +106,7 @@ function Members() {
   };
 
   return (
-    <div className="min-h-screen bg-base p-8">
+    <div className="min-h-screen bg-base p-4 sm:p-6 md:p-8">
       <h1 className="font-display text-3xl font-bold text-text mb-6">
         Members
       </h1>
@@ -117,8 +117,8 @@ function Members() {
         </p>
       )}
 
-      <div className="bg-surface/80 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden">
-        <table className="w-full text-left text-text">
+      <div className="bg-surface/80 backdrop-blur-xl border border-white/10 rounded-2xl overflow-x-auto">
+        <table className="w-full text-left text-text min-w-[700px]">
           <thead className="bg-surface-light">
             <tr>
               <th className="p-3">Name</th>

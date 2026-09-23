@@ -55,7 +55,7 @@ function Analytics() {
   }));
 
   return (
-    <div className="min-h-screen bg-base p-8">
+    <div className="min-h-screen bg-base p-4 sm:p-6 md:p-8">
       <h1 className="font-display text-3xl font-bold text-text mb-6">
         Analytics Dashboard
       </h1>
