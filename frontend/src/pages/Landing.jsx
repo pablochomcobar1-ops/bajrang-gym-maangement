@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { QRCodeSVG } from "qrcode.react";
 
 function Landing() {
   const features = [
@@ -102,6 +103,19 @@ function Landing() {
             <p className="text-text-muted text-sm">{f.desc}</p>
           </motion.div>
         ))}
+      </div>
+
+      {/* QR Code */}
+      <div className="relative max-w-sm mx-auto text-center px-4 pb-16">
+        <div className="bg-surface/80 backdrop-blur-xl border border-white/10 p-6 rounded-2xl inline-block">
+          <div className="bg-white p-3 rounded-xl inline-block mb-3">
+            <QRCodeSVG
+              value="https://bajrang-gym-maangement.vercel.app"
+              size={140}
+            />
+          </div>
+          <p className="text-text-muted text-sm">Scan to visit on your phone</p>
+        </div>
       </div>
 
       {/* Footer */}
