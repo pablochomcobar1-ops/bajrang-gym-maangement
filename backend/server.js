@@ -20,6 +20,7 @@ const feedbackRoutes = require("./routes/feedbackRoutes");
 const appointmentRoutes = require("./routes/appointmentRoutes");
 const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
+const announcementRoutes = require("./routes/announcementRoutes");
 // Create the server app
 const app = express();
 app.set("trust proxy", 1);
@@ -70,6 +71,7 @@ app.use("/api/workout-logs", workoutLogRoutes);
 app.use("/api/exercises", exerciseRoutes);
 app.use("/api/feedback", feedbackRoutes);
 app.use("/api/appointments", appointmentRoutes);
+app.use("/api/announcements", announcementRoutes);
 
 app.get("/", (req, res) => {
   res.send("API is running !!!");
