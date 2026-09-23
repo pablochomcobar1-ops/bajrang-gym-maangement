@@ -118,6 +118,51 @@ function Landing() {
         </div>
       </div>
 
+      {/* Contact */}
+      <div className="relative max-w-3xl mx-auto px-4 pb-16">
+        <div className="bg-surface/80 backdrop-blur-xl border border-white/10 p-8 rounded-2xl">
+          <h2 className="font-display text-2xl font-bold text-text mb-6 text-center">
+            Visit Us
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+            <div>
+              <p className="text-accent-lime text-sm font-semibold mb-1">
+                Address
+              </p>
+              <p className="text-text-muted text-sm">
+                3rd Floor, Nandani Plaza,
+                <br />
+                Modasa Road, Kapadvanj
+                <br />
+                387620
+              </p>
+            </div>
+            <div>
+              <p className="text-accent-lime text-sm font-semibold mb-1">
+                Phone
+              </p>
+              <a
+                href="tel:+917622034124"
+                className="text-text-muted text-sm hover:text-text transition"
+              >
+                +91 76220 34124
+              </a>
+            </div>
+            <div>
+              <p className="text-accent-lime text-sm font-semibold mb-1">
+                Email
+              </p>
+              <a
+                href="mailto:bajranggym2210@gmail.com"
+                className="text-text-muted text-sm hover:text-text transition break-all"
+              >
+                bajranggym2210@gmail.com
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Footer */}
       <footer className="relative text-center text-text-muted text-sm pb-8">
         © {new Date().getFullYear()} Bajrang GYM. All rights reserved.
