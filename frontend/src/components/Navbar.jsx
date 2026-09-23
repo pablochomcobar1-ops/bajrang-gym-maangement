@@ -235,11 +235,11 @@ function Navbar() {
               className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 md:hidden"
             />
             <motion.div
-              initial={{ x: "100%" }}
+              initial={{ x: "-100%" }}
               animate={{ x: 0 }}
-              exit={{ x: "100%" }}
+              exit={{ x: "-100%" }}
               transition={{ type: "tween", duration: 0.25 }}
-              className="fixed top-0 right-0 h-full w-72 bg-surface border-l border-white/10 z-50 p-6 overflow-y-auto md:hidden"
+              className="fixed top-0 left-0 h-full w-72 bg-surface border-r border-white/10 z-50 p-6 overflow-y-auto md:hidden"
             >
               <div className="flex justify-between items-center mb-6">
                 <span className="text-text font-medium">{user?.name}</span>
