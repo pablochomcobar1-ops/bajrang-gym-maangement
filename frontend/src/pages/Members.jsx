@@ -9,7 +9,7 @@ function Members() {
   const [loading, setLoading] = useState(true);
 
   const [editingId, setEditingId] = useState(null);
-  const [editForm, setEditForm] = useState({ name: "", email: "" });
+  const [editForm, setEditForm] = useState({ name: "", email: "", phone: "" });
   const [confirmDeleteId, setConfirmDeleteId] = useState(null);
   const [plans, setPlans] = useState([]);
   const [renewingId, setRenewingId] = useState(null);
@@ -53,7 +53,11 @@ function Members() {
 
   const startEditing = (member) => {
     setEditingId(member._id);
-    setEditForm({ name: member.name, email: member.email });
+    setEditForm({
+      name: member.name,
+      email: member.email,
+      phone: member.phone || "",
+    });
   };
 
   const cancelEditing = () => setEditingId(null);
@@ -123,6 +127,7 @@ function Members() {
             <tr>
               <th className="p-3">Name</th>
               <th className="p-3">Email</th>
+              <th className="p-3">Phone</th>
               <th className="p-3">Role</th>
               <th className="p-3">Membership</th>
               <th className="p-3">Joined</th>
@@ -150,6 +155,15 @@ function Members() {
                         className="bg-surface-light p-1.5 rounded-lg w-full outline-none focus:ring-2 focus:ring-accent-violet"
                       />
                     </td>
+                    <td className="p-3">
+                      <input
+                        name="phone"
+                        value={editForm.phone}
+                        onChange={handleEditChange}
+                        className="bg-surface-light p-1.5 rounded-lg w-full outline-none focus:ring-2 focus:ring-accent-violet"
+                      />
+                    </td>
+
                     <td className="p-3 text-text-muted capitalize">
                       {member.role}
                     </td>
@@ -176,6 +190,9 @@ function Members() {
                   <>
                     <td className="p-3">{member.name}</td>
                     <td className="p-3 text-text-muted">{member.email}</td>
+                    <td className="p-3 text-text-muted">
+                      {member.phone || "—"}
+                    </td>
                     <td className="p-3 capitalize text-text-muted">
                       {member.role}
                     </td>

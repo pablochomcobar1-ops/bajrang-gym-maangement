@@ -10,6 +10,7 @@ function Register() {
     name: "",
     email: "",
     password: "",
+    phone: "",
   });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -81,6 +82,16 @@ function Register() {
           onChange={handleChange}
           required
           className="w-full mb-3 p-3 rounded-xl bg-surface-light text-text placeholder-text-muted outline-none focus:ring-2 focus:ring-accent-violet transition"
+        />
+
+        <input
+          type="tel"
+          name="phone"
+          placeholder="Phone Number"
+          value={formData.phone}
+          onChange={handleChange}
+          required
+          className="w-full mb-3 p-3 rounded-xl bg-surface-light text-text placeholder-text-muted outline-none focus:ring-2 focus:ring-accent-violet"
         />
 
         <input

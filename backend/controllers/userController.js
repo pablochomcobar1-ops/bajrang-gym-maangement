@@ -48,6 +48,7 @@ const updateMember = async (req, res) => {
     user.name = name || user.name;
     user.email = email || user.email;
     user.role = role || user.role;
+    user.phone = phone ?? user.phone;
 
     const updatedUser = await user.save();
 

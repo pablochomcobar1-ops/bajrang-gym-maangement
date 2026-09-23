@@ -37,6 +37,11 @@ const userSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    phone: {
+      type: String,
+      default: "",
+      trim: true,
+    },
   },
   {
     timestamps: true, // automatically adds createdAt and updatedAt fields

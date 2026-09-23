@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken"); // ADD THIS
 // @route  POST /api/auth/register
 const registerUser = async (req, res) => {
   try {
-    const { name, email, password, role } = req.body;
+    const { name, email, password, role, phone } = req.body;
 
     const existingUser = await User.findOne({ email });
     if (existingUser) {
@@ -23,6 +23,7 @@ const registerUser = async (req, res) => {
       email,
       password: hashedPassword,
       role: role || "member",
+      phone: phone || "",
     });
 
     res.status(201).json({
@@ -30,6 +31,7 @@ const registerUser = async (req, res) => {
       name: user.name,
       email: user.email,
       role: user.role,
+      phone: user.phone,
     });
   } catch (error) {
     res.status(500).json({ message: "Server error", error: error.message });
