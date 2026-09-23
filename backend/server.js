@@ -22,6 +22,7 @@ const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
 // Create the server app
 const app = express();
+app.set("trust proxy", 1);
 
 // Connect to database
 connectDB();
